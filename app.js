@@ -16,6 +16,19 @@ app.post("/add",(req,res)=>{
     res.json({status:"done"})
 })
 
+app.post("/search",(req,res)=>{
+    let input =  req.body
+    coursemodel.find(input).then(
+        (data)=> {
+            res.json(data)
+        }
+    ).catch(
+        (error)=>{
+            res.json(error)
+        }
+    )
+})
+
 app.get("/view",(req,res)=>{
     coursemodel.find().then(
         (data)=>{
@@ -28,6 +41,21 @@ app.get("/view",(req,res)=>{
     )
 })
 
-app.listen(8080,()=>{
+
+app.post("/delete",(req,res)=>{
+    let input = req.body
+    coursemodel.findByIdAndDelete(input._id).then(
+        (response)=>{
+            res.json({"status":"success"})
+        }
+    ).catch(
+        (error)=>{
+            res.json({"status":"error"})
+        }
+    )
+
+})
+
+app.listen(8086,()=>{
     console.log("server started")
 })
